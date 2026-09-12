@@ -98,12 +98,13 @@ class Output
     ): ?string {
         $coloredString = "";
 
-        // Check if given foreground color found
-        if (isset($this->foregroundColors[$foregroundColor])) {
+        // A null colour is "no colour", not a lookup: using null as an array
+        // offset is deprecated, and the framework turns that into an exception.
+        if (null !== $foregroundColor && isset($this->foregroundColors[$foregroundColor])) {
             $coloredString .= "\033[" . $this->foregroundColors[$foregroundColor] . "m";
         }
         // Check if given background color found
-        if (isset($this->backgroundColors[$backgroundColor])) {
+        if (null !== $backgroundColor && isset($this->backgroundColors[$backgroundColor])) {
             $coloredString .= "\033[" . $this->backgroundColors[$backgroundColor] . "m";
         }
 
