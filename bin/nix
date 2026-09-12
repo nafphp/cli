@@ -10,4 +10,6 @@ use function NixPHP\app;
 
 $registry = app()->container()->get(CommandRegistry::class);
 $cli = new Console($registry);
-$cli->run($argv);
+
+// The command's status is the process's status.
+exit($cli->run($argv));

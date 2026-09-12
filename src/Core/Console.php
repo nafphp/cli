@@ -12,6 +12,13 @@ use function NixPHP\app;
 class Console
 {
     /**
+     * Conventional shell statuses. A command is free to return another value and
+     * it is passed through unchanged; these are what the console itself uses.
+     */
+    public const int SUCCESS = 0;
+    public const int ERROR   = 1;
+
+    /**
      * @param CommandRegistry $registry
      */
     public function __construct(
@@ -20,11 +27,18 @@ class Console
     }
 
     /**
+     * Runs a command and reports how it went.
+     *
+     * The status a command returns is the status the shell gets. Discarding it
+     * meant every invocation looked successful — a failed migration, a diagnosis
+     * that found problems, a command that does not exist — which is exactly the
+     * thing a script or a CI step reads to decide what happens next.
+     *
      * @param array $parameters
      *
-     * @return void
+     * @return int Exit status: zero when the command succeeded, non-zero otherwise.
      */
-    public function run(array $parameters): void
+    public function run(array $parameters): int
     {
         // The first argument is the bin/console command itself
         array_shift($parameters);
@@ -65,15 +79,20 @@ class Console
                 $output->writeEmptyLine();
             }
 
-            $object->run($input, $output);
+            $status = $object->run($input, $output);
 
         } catch (\Exception $e) {
             print PHP_EOL;
             print $e->getMessage();
             print PHP_EOL;
+
+            // It printed something, but it did not do what it was asked to.
+            $status = self::ERROR;
         }
 
         print PHP_EOL;
+
+        return $status;
     }
 
 }

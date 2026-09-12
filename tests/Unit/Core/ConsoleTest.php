@@ -43,6 +43,20 @@ class ErrorConsoleCommand extends AbstractCommand
     }
 }
 
+class FailingConsoleCommand extends AbstractCommand
+{
+    public const NAME = 'failing:command';
+
+    protected function configure(): void
+    {
+    }
+
+    public function run(Input $input, Output $output): int
+    {
+        return self::ERROR;
+    }
+}
+
 class ConsoleTest extends NixPHPTestCase
 {
     private CommandRegistry $registry;
@@ -137,5 +151,66 @@ class ConsoleTest extends NixPHPTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Test error', $output);
+    }
+
+    // ------------------------------------------------------- Exit statuses
+
+    public function testASuccessfulCommandReportsSuccess(): void
+    {
+        $this->registry->expects($this->once())
+            ->method('get')
+            ->with('test:command')
+            ->willReturn(TestConsoleCommand::class);
+
+        ob_start();
+        $status = $this->console->run(['script.php', 'test:command']);
+        ob_end_clean();
+
+        $this->assertSame(Console::SUCCESS, $status);
+    }
+
+    public function testAFailingCommandReportsItsOwnStatus(): void
+    {
+        // Whatever a command returns is what the shell gets. Discarding it made
+        // every invocation look successful, which is the one thing a script or a
+        // CI step reads to decide what happens next.
+        $this->registry->expects($this->once())
+            ->method('get')
+            ->with('failing:command')
+            ->willReturn(FailingConsoleCommand::class);
+
+        ob_start();
+        $status = $this->console->run(['script.php', 'failing:command']);
+        ob_end_clean();
+
+        $this->assertNotSame(Console::SUCCESS, $status);
+    }
+
+    public function testACommandThatThrowsDoesNotLookSuccessful(): void
+    {
+        $this->registry->expects($this->once())
+            ->method('get')
+            ->with('error:command')
+            ->willReturn(ErrorConsoleCommand::class);
+
+        ob_start();
+        $status = $this->console->run(['script.php', 'error:command']);
+        ob_end_clean();
+
+        $this->assertSame(Console::ERROR, $status);
+    }
+
+    public function testAnUnknownCommandDoesNotLookSuccessful(): void
+    {
+        $this->registry->expects($this->once())
+            ->method('get')
+            ->with('non:existent')
+            ->willReturn(null);
+
+        ob_start();
+        $status = $this->console->run(['script.php', 'non:existent']);
+        ob_end_clean();
+
+        $this->assertSame(Console::ERROR, $status);
     }
 }
