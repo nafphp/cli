@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Commands;
+namespace Naf\CLI\Commands;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use NixPHP\CLI\Exception\ConsoleException;
-use function NixPHP\app;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Naf\CLI\Exception\ConsoleException;
+use function Naf\app;
 
 class ListCommand extends AbstractCommand
 {

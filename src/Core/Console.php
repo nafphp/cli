@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Core;
+namespace Naf\CLI\Core;
 
-use NixPHP\CLI\Commands\ListCommand;
-use NixPHP\CLI\Exception\ConsoleException;
-use NixPHP\CLI\Support\CommandRegistry;
-use function NixPHP\app;
+use Naf\CLI\Commands\ListCommand;
+use Naf\CLI\Exception\ConsoleException;
+use Naf\CLI\Support\CommandRegistry;
+use function Naf\app;
 
 class Console
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Commands;
+namespace Naf\CLI\Commands;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use function NixPHP\route;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use function Naf\route;
 
 class RouteDebugCommand extends AbstractCommand
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core;
 
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Exception\ConsoleException;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Exception\ConsoleException;
+use Tests\NafTestCase;
 
-class InputTest extends NixPHPTestCase
+class InputTest extends NafTestCase
 {
     public function testConstructorParsesParameters(): void
     {

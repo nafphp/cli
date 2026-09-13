@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core;
 
-use NixPHP\CLI\Core\Output;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Core\Output;
+use Tests\NafTestCase;
 
-class OutputTest extends NixPHPTestCase
+class OutputTest extends NafTestCase
 {
     private Output $output;
 

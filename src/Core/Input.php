@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Core;
+namespace Naf\CLI\Core;
 
-use NixPHP\CLI\Exception\ConsoleException;
+use Naf\CLI\Exception\ConsoleException;
 
 class Input
 {

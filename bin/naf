@@ -8,9 +8,9 @@ $autoload = $GLOBALS['_composer_autoload_path'] ?? dirname(__DIR__) . '/vendor/a
 require_once $autoload;
 require_once dirname($autoload, 2) . '/bootstrap.php';
 
-use NixPHP\CLI\Core\Console;
-use NixPHP\CLI\Support\CommandRegistry;
-use function NixPHP\app;
+use Naf\CLI\Core\Console;
+use Naf\CLI\Support\CommandRegistry;
+use function Naf\app;
 
 $registry = app()->container()->get(CommandRegistry::class);
 $cli = new Console($registry);

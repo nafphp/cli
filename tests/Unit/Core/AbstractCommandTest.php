@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Tests\NafTestCase;
 
-class AbstractCommandTest extends NixPHPTestCase
+class AbstractCommandTest extends NafTestCase
 {
     private TestCommand $command;
 

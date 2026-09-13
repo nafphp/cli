@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Support;
 
-use NixPHP\CLI\Support\CommandRegistry;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Support\CommandRegistry;
+use Tests\NafTestCase;
 
 class TestRegistryCommand
 {
@@ -17,7 +17,7 @@ class SecondTestRegistryCommand
     public const NAME = 'second:registry';
 }
 
-class CommandRegistryTest extends NixPHPTestCase
+class CommandRegistryTest extends NafTestCase
 {
     private CommandRegistry $registry;
 

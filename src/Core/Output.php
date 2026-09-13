@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Core;
+namespace Naf\CLI\Core;
 
 class Output
 {

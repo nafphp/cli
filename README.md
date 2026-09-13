@@ -1,28 +1,28 @@
 <div style="text-align: center;" align="center">
 
-![Logo](https://nixphp.github.io/docs/assets/nixphp-logo-small-square.png)
+![NAF](assets/naf-logo-small-square.png)
 
-[![NixPHP CLI Plugin](https://github.com/nixphp/cli/actions/workflows/php.yml/badge.svg)](https://github.com/nixphp/cli/actions/workflows/php.yml)
+[![NAF CLI Plugin](https://github.com/nafphp/cli/actions/workflows/php.yml/badge.svg)](https://github.com/nafphp/cli/actions/workflows/php.yml)
 
 </div>
 
-[← Back to NixPHP](https://github.com/nixphp/framework)
+[← Back to NAF](https://github.com/nafphp/framework)
 
 ---
 
-# nixphp/cli
+# naf/cli
 
-> **A minimal, developer-friendly command-line interface for your NixPHP application.**
+> **A minimal, developer-friendly command-line interface for your NAF application.**
 
 This plugin gives you a clean CLI system with colored output, argument parsing, and auto-discovered commands. All without external dependencies.
 
-> 🧩 Part of the official NixPHP plugin collection. Install it if you want powerful CLI tools for development, deployment, and automation.
+> 🧩 Part of the official NAF plugin collection. Install it if you want powerful CLI tools for development, deployment, and automation.
 
 ---
 
 ## 📦 Features
 
-- ✅ Adds `vendor/bin/nix` as your app’s command-line entry point
+- ✅ Adds `vendor/bin/naf` as your app’s command-line entry point
 - ✅ Auto-discovers commands in `app/Commands/`
 - ✅ Supports arguments, options, and interactive input
 - ✅ Prints colored output for better UX
@@ -33,10 +33,10 @@ This plugin gives you a clean CLI system with colored output, argument parsing, 
 ## 📥 Installation
 
 ```bash
-composer require nixphp/cli
+composer require naf/cli
 ```
 
-This will create `vendor/bin/nix`, your CLI gateway.
+This will create `vendor/bin/naf`, your CLI gateway.
 
 ---
 
@@ -45,13 +45,13 @@ This will create `vendor/bin/nix`, your CLI gateway.
 ### 🔍 Run a command
 
 ```bash
-vendor/bin/nix your:command
+vendor/bin/naf your:command
 ```
 
 Commands are discovered automatically if placed in your app’s `app/Commands/` directory.
 
 ```bash
-vendor/bin/nix
+vendor/bin/naf
 ```
 
 If you call the helper without arguments, it prints all available CLI commands.
@@ -65,9 +65,9 @@ To create your own CLI command, add a class in the `app/Commands/` folder:
 ```php
 namespace App\Commands;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
 
 class HelloCommand extends AbstractCommand
 {
@@ -93,7 +93,7 @@ No registration needed — as long as the class resides in `app/Commands/`, it w
 Then run:
 
 ```bash
-vendor/bin/nix hello:say John
+vendor/bin/naf hello:say John
 ```
 
 ---
@@ -148,7 +148,7 @@ bootstrap.php
 
 ## ✅ Requirements
 
-* `nixphp/framework` >= 0.1.0
+* `naf/framework` >= 0.1.0
 * PHP >= 8.3
 
 ---

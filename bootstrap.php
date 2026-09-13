@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use NixPHP\CLI\Commands\ListCommand;
-use NixPHP\CLI\Commands\RouteDebugCommand;
-use NixPHP\CLI\Support\CommandRegistry;
-use function NixPHP\CLI\command;
-use function NixPHP\app;
+use Naf\CLI\Commands\ListCommand;
+use Naf\CLI\Commands\RouteDebugCommand;
+use Naf\CLI\Support\CommandRegistry;
+use function Naf\CLI\command;
+use function Naf\app;
 
 app()->container()->set(CommandRegistry::class, function() {
     $commandRegistry = new CommandRegistry();

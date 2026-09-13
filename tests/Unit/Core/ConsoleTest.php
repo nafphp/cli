@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Console;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use NixPHP\CLI\Support\CommandRegistry;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Console;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Naf\CLI\Support\CommandRegistry;
+use Tests\NafTestCase;
 
 class TestConsoleCommand extends AbstractCommand
 {
@@ -57,7 +57,7 @@ class FailingConsoleCommand extends AbstractCommand
     }
 }
 
-class ConsoleTest extends NixPHPTestCase
+class ConsoleTest extends NafTestCase
 {
     private CommandRegistry $registry;
     private Console $console;

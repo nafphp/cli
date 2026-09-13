@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI;
+namespace Naf\CLI;
 
-use NixPHP\CLI\Support\CommandRegistry;
-use function NixPHP\app;
+use Naf\CLI\Support\CommandRegistry;
+use function Naf\app;
 
 function command(): CommandRegistry
 {

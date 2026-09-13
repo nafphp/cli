@@ -1,9 +1,9 @@
 {
-  "name": "nixphp/cli",
-  "description": "NixPHP CLI Plugin for console applications.",
+  "name": "naf/cli",
+  "description": "NAF CLI Plugin for console applications.",
   "minimum-stability": "stable",
   "license": "MIT",
-  "type": "nixphp-plugin",
+  "type": "naf-plugin",
   "authors": [
     {
       "name": "Flo Knapp",
@@ -12,7 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NixPHP\\CLI\\": "src/"
+      "Naf\\CLI\\": "src/"
     }
   },
   "autoload-dev": {
@@ -23,7 +23,7 @@
   "require": {
     "php": ">=8.3",
     "ext-readline": "*",
-    "nixphp/framework": "^0.1.0"
+    "naf/framework": "^0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.1",
@@ -33,6 +33,6 @@
     "test": "phpunit --colors=always"
   },
   "bin": [
-    "bin/nix"
+    "bin/naf"
   ]
 }

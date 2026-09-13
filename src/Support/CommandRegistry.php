@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\CLI\Support;
+namespace Naf\CLI\Support;
 
 class CommandRegistry
 {
