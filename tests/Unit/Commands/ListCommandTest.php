@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Commands;
 
-use NixPHP\CLI\Commands\ListCommand;
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use NixPHP\CLI\Exception\ConsoleException;
-use Tests\NixPHPTestCase;
+use Naf\CLI\Commands\ListCommand;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Naf\CLI\Exception\ConsoleException;
+use Tests\NafTestCase;
 
 class TestCommand1 extends AbstractCommand
 {
@@ -52,7 +52,7 @@ class InvalidCommand
     }
 }
 
-class ListCommandTest extends NixPHPTestCase
+class ListCommandTest extends NafTestCase
 {
     private ListCommand $command;
     private array $commands;
@@ -62,7 +62,7 @@ class ListCommandTest extends NixPHPTestCase
         $this->commands = [
             TestCommand1::class,
             TestCommand2::class,
-            'NixPHP\CLI\Commands\ListCommand',
+            'Naf\CLI\Commands\ListCommand',
         ];
         
         $this->command = new ListCommand();
@@ -78,7 +78,7 @@ class ListCommandTest extends NixPHPTestCase
     public function testRunSkipsListCommandItself(): void
     {
         $output = $this->createMock(Output::class);
-        $input = $this->createMock(Input::class);
+        $input = $this->createStub(Input::class);
 
         $output->expects($this->exactly(4))
             ->method('writeLine');
@@ -101,8 +101,8 @@ class ListCommandTest extends NixPHPTestCase
         
         $command = new ListCommand();
         $command->setCommands($invalidCommands);
-        $input = $this->createMock(Input::class);
-        $output = $this->createMock(Output::class);
+        $input = $this->createStub(Input::class);
+        $output = $this->createStub(Output::class);
         
         $command->run($input, $output);
     }
