@@ -18,11 +18,7 @@ final class BinaryTest extends TestCase
         );
         $process = proc_open(
             [PHP_BINARY, '-r', $code],
-            [
-                ['pipe', 'r'],
-                ['pipe', 'w'],
-                ['pipe', 'w'],
-            ],
+            [['pipe', 'r'], ['pipe', 'w'], ['pipe', 'w']],
             $pipes,
             sys_get_temp_dir(),
         );

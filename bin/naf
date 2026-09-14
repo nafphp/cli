@@ -12,10 +12,11 @@ require_once dirname($autoload, 2) . '/bootstrap.php';
 
 use Naf\CLI\Core\Console;
 use Naf\CLI\Support\CommandRegistry;
+
 use function Naf\app;
 
 $registry = app()->container()->get(CommandRegistry::class);
-$cli = new Console($registry);
+$cli      = new Console($registry);
 
 // The command's status is the process's status.
 exit($cli->run($argv));
