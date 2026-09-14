@@ -35,3 +35,10 @@ composer require naf/cli
 ## License
 
 MIT. Part of [NAF](https://github.com/nafphp/framework).
+
+
+## Unreleased Nafinity integration candidate
+
+Target branch: `v0.2.2-rc`. This behavior is not a published release yet.
+
+The binary resolves Composer autoload paths before locating the application bootstrap. Invoking vendor/bin/naf through a relative Composer proxy now finds the same host bootstrap as the absolute path.
