@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core;
 
+use Exception;
 use Naf\CLI\Core\AbstractCommand;
 use Naf\CLI\Core\Console;
 use Naf\CLI\Core\Input;
@@ -39,7 +40,7 @@ class ErrorConsoleCommand extends AbstractCommand
 
     public function run(Input $input, Output $output): int
     {
-        throw new \Exception('Test error');
+        throw new Exception('Test error');
     }
 }
 
@@ -65,7 +66,7 @@ class ConsoleTest extends NafTestCase
     protected function setUp(): void
     {
         $this->registry = $this->createMock(CommandRegistry::class);
-        $this->console = new Console($this->registry);
+        $this->console  = new Console($this->registry);
     }
 
     public function testRunWithEmptyCommandCallsListCommand(): void

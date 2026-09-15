@@ -14,13 +14,13 @@ use Tests\NafTestCase;
 class TestCommand1 extends AbstractCommand
 {
     public const string NAME = 'test:command1';
-    
+
     protected function configure(): void
     {
         $this->setTitle('Test Command 1')
             ->setDescription('Test command 1 description');
     }
-    
+
     public function run(Input $input, Output $output): int
     {
         return self::SUCCESS;
@@ -30,13 +30,13 @@ class TestCommand1 extends AbstractCommand
 class TestCommand2 extends AbstractCommand
 {
     public const string NAME = 'test:command2';
-    
+
     protected function configure(): void
     {
         $this->setTitle('Test Command 2')
             ->setDescription('Test command 2 description');
     }
-    
+
     public function run(Input $input, Output $output): int
     {
         return self::SUCCESS;
@@ -64,7 +64,7 @@ class ListCommandTest extends NafTestCase
             TestCommand2::class,
             'Naf\CLI\Commands\ListCommand',
         ];
-        
+
         $this->command = new ListCommand();
         $this->command->setCommands($this->commands);
     }
@@ -78,32 +78,32 @@ class ListCommandTest extends NafTestCase
     public function testRunSkipsListCommandItself(): void
     {
         $output = $this->createMock(Output::class);
-        $input = $this->createStub(Input::class);
+        $input  = $this->createStub(Input::class);
 
         $output->expects($this->exactly(4))
             ->method('writeLine');
-        
+
         $output->expects($this->exactly(2))
             ->method('writeEmptyLine');
-        
+
         $result = $this->command->run($input, $output);
-        
+
         $this->assertSame(0, $result);
     }
 
     public function testRunThrowsExceptionForInvalidCommandClass(): void
     {
         $this->expectException(ConsoleException::class);
-        
+
         $invalidCommands = [
             InvalidCommand::class,
         ];
-        
+
         $command = new ListCommand();
         $command->setCommands($invalidCommands);
-        $input = $this->createStub(Input::class);
+        $input  = $this->createStub(Input::class);
         $output = $this->createStub(Output::class);
-        
+
         $command->run($input, $output);
     }
 }

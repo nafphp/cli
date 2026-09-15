@@ -8,6 +8,7 @@ use Naf\CLI\Core\AbstractCommand;
 use Naf\CLI\Core\Input;
 use Naf\CLI\Core\Output;
 use Naf\CLI\Exception\ConsoleException;
+
 use function Naf\app;
 
 class ListCommand extends AbstractCommand
@@ -29,7 +30,7 @@ class ListCommand extends AbstractCommand
 
     public function run(Input $input, Output $output): int
     {
-        $commands = [];
+        $commands     = [];
         $longestChars = 0;
 
         foreach ($this->commands as $command) {
@@ -43,7 +44,7 @@ class ListCommand extends AbstractCommand
             }
 
 
-            $commandName = $command::NAME;
+            $commandName       = $command::NAME;
             $commandNameLength = strlen($commandName);
 
             if ($commandNameLength > $longestChars) {
@@ -80,7 +81,7 @@ class ListCommand extends AbstractCommand
         return [
             'title'           => $instance->getTitle(),
             'description'     => $instance->getDescription(),
-            'inputDefinition' => $instance->getDefinition()
+            'inputDefinition' => $instance->getDefinition(),
         ];
     }
 }

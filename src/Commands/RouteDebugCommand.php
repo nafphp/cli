@@ -7,11 +7,12 @@ namespace Naf\CLI\Commands;
 use Naf\CLI\Core\AbstractCommand;
 use Naf\CLI\Core\Input;
 use Naf\CLI\Core\Output;
+
 use function Naf\route;
 
 class RouteDebugCommand extends AbstractCommand
 {
-    const string NAME = 'route:debug';
+    public const string NAME = 'route:debug';
 
     protected function configure(): void
     {
@@ -21,26 +22,26 @@ class RouteDebugCommand extends AbstractCommand
 
     public function run(Input $input, Output $output): int
     {
-        $routes = route()->all();
+        $routes       = route()->all();
         $longestChars = 0;
-        $data = [];
+        $data         = [];
 
         foreach ($routes as $name => $route) {
 
             if (is_array($route['action'])) {
                 [$class, $action] = $route['action'];
-            } else if (is_callable($route['action'])) {
-                $class = 'Anonymous';
+            } elseif (is_callable($route['action'])) {
+                $class  = 'Anonymous';
                 $action = 'Closure';
             } else {
-                $class = 'none';
+                $class  = 'none';
                 $action = 'none';
             }
 
-            $path = $route['path'];
+            $path   = $route['path'];
             $method = $route['method'];
 
-            $methodAndPath = '[' . $method . '] ' . $path;
+            $methodAndPath       = '[' . $method . '] ' . $path;
             $methodAndPathLength = strlen($methodAndPath);
 
             if ($methodAndPathLength > $longestChars) {
@@ -48,10 +49,10 @@ class RouteDebugCommand extends AbstractCommand
             }
 
             $data[$name] = [
-                'name' => $name,
-                'path' => $path,
+                'name'   => $name,
+                'path'   => $path,
                 'method' => $method,
-                'class' => $class,
+                'class'  => $class,
                 'action' => $action,
             ];
 
@@ -72,5 +73,4 @@ class RouteDebugCommand extends AbstractCommand
         return self::SUCCESS;
 
     }
-
 }
