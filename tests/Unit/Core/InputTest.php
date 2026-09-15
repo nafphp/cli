@@ -15,11 +15,11 @@ class InputTest extends NafTestCase
         $parameters = ['--option1=value1', 'arg1'];
         $definition = [
             'arguments' => ['arg' => 'required'],
-            'options' => ['option1' => 'value']
+            'options'   => ['option1' => 'value'],
         ];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertSame('arg1', $input->getArgument('arg'));
         $this->assertSame('value1', $input->getOption('option1'));
     }
@@ -27,14 +27,14 @@ class InputTest extends NafTestCase
     public function testGetArgumentReturnsNullForNonExistentArgument(): void
     {
         $input = new Input([], ['arguments' => []]);
-        
+
         $this->assertNull($input->getArgument('non_existent'));
     }
 
     public function testGetOptionReturnsNullForNonExistentOption(): void
     {
         $input = new Input([], ['options' => []]);
-        
+
         $this->assertNull($input->getOption('non_existent'));
     }
 
@@ -42,9 +42,9 @@ class InputTest extends NafTestCase
     {
         $parameters = ['--option1=value1'];
         $definition = ['options' => ['option1' => 'value']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertSame('value1', $input->getOption('option1'));
     }
 
@@ -52,9 +52,9 @@ class InputTest extends NafTestCase
     {
         $parameters = ['--option1', 'value1'];
         $definition = ['options' => ['option1' => 'value']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertSame('value1', $input->getOption('option1'));
     }
 
@@ -62,9 +62,9 @@ class InputTest extends NafTestCase
     {
         $parameters = ['-o', 'value1'];
         $definition = ['options' => ['o' => 'value']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertSame('value1', $input->getOption('o'));
     }
 
@@ -72,19 +72,19 @@ class InputTest extends NafTestCase
     {
         $parameters = ['--flag'];
         $definition = ['options' => ['flag' => 'flag']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertTrue($input->getOption('flag'));
     }
 
     public function testTooManyArgumentsThrowsException(): void
     {
         $this->expectException(ConsoleException::class);
-        
+
         $parameters = ['arg1', 'arg2'];
         $definition = ['arguments' => ['arg' => 'required']];
-        
+
         new Input($parameters, $definition);
     }
 
@@ -92,9 +92,9 @@ class InputTest extends NafTestCase
     {
         $parameters = [];
         $definition = ['arguments' => ['optional' => 'optional']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertNull($input->getArgument('optional'));
     }
 
@@ -102,9 +102,9 @@ class InputTest extends NafTestCase
     {
         $parameters = ['--option=value1', '--option=value2'];
         $definition = ['options' => ['option' => 'value']];
-        
+
         $input = new Input($parameters, $definition);
-        
+
         $this->assertSame(['value1', 'value2'], $input->getOption('option'));
     }
 

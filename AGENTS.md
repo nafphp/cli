@@ -75,3 +75,7 @@ console in a bootstrapped host, including help, bad input, exit codes and constr
 The [tests](tests/) provide examples. No `analyse` script is declared.
 
 User docs: [Console](https://nafphp.github.io/docs/console/).
+
+Follow the shared [PHP code style](https://github.com/nafphp/docs/blob/main/CODE_STYLE.md)
+and `.php-cs-fixer.dist.php`. Run `composer style:check`; `composer style:fix` applies the rules.
+Keep logical steps and local names readable, preserving public signatures and template output.

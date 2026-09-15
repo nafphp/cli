@@ -6,17 +6,16 @@ namespace Naf\CLI\Core;
 
 abstract class AbstractCommand
 {
-
     public const NAME = null;
 
     protected const int SUCCESS = 0;
     protected const int ERROR   = 1;
 
-    private string $title = '';
+    private string $title       = '';
     private string $description = '';
 
     private array $arguments = [];
-    private array $options = [];
+    private array $options   = [];
 
     public function __construct()
     {
@@ -30,13 +29,14 @@ abstract class AbstractCommand
     {
         return [
             'arguments' => $this->arguments,
-            'options'   => $this->options
+            'options'   => $this->options,
         ];
     }
 
     protected function addArgument(string $name, bool $optional = false): self
     {
         $this->arguments[$name] = $optional ? 'optional' : 'required';
+
         return $this;
     }
 
@@ -58,6 +58,7 @@ abstract class AbstractCommand
     protected function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -76,6 +77,7 @@ abstract class AbstractCommand
     protected function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -122,5 +124,4 @@ abstract class AbstractCommand
     abstract protected function configure(): void;
 
     abstract public function run(Input $input, Output $output): int;
-
 }
