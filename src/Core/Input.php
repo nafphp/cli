@@ -10,12 +10,9 @@ class Input
 {
     private array $definition;
     private array $arguments = [];
-    private array $options = [];
+    private array $options   = [];
 
     /**
-     * @param array $parameters
-     * @param array $definition
-     *
      * @throws ConsoleException
      */
     public function __construct(array $parameters, array $definition)
@@ -25,9 +22,6 @@ class Input
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return void
      * @throws ConsoleException
      */
     private function parse(array $parameters): void
@@ -52,7 +46,7 @@ class Input
                 $options[$key][] = $value ?? true;
             } elseif (str_starts_with($parameter, '-')) {
                 // -o value
-                $key = substr($parameter, 1);
+                $key   = substr($parameter, 1);
                 $value = null;
 
                 if (isset($parameters[$i + 1]) && !str_starts_with($parameters[$i + 1], '-')) {
@@ -71,7 +65,7 @@ class Input
         $definitionArgs = $this->definition['arguments'] ?? [];
 
         $argumentMap = [];
-        $index = 0;
+        $index       = 0;
         foreach ($definitionArgs as $name => $isOptional) {
             if (array_key_exists($index, $arguments)) {
                 $argumentMap[$name] = $arguments[$index++];
@@ -99,21 +93,11 @@ class Input
         }
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string|null
-     */
     public function getArgument(string $name): ?string
     {
         return $this->arguments[$name] ?? null;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string|array|bool|null
-     */
     public function getOption(string $name): string|array|bool|null
     {
         if (!isset($this->options[$name])) {
@@ -129,11 +113,6 @@ class Input
         return $value;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return string
-     */
     public function ask(string $message): string
     {
         echo $message . ' ';
@@ -141,6 +120,7 @@ class Input
         if ($input !== '' && function_exists('readline_add_history')) {
             readline_add_history($input);
         }
+
         return $input;
     }
 }

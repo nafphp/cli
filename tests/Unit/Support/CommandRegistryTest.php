@@ -29,10 +29,10 @@ class CommandRegistryTest extends NafTestCase
     public function testAddCommand(): void
     {
         $this->registry->add(TestRegistryCommand::class);
-        
+
         $this->assertSame(
-            TestRegistryCommand::class, 
-            $this->registry->get(TestRegistryCommand::NAME)
+            TestRegistryCommand::class,
+            $this->registry->get(TestRegistryCommand::NAME),
         );
     }
 
@@ -40,13 +40,13 @@ class CommandRegistryTest extends NafTestCase
     {
         $this->registry->add(TestRegistryCommand::class);
         $this->registry->add(TestRegistryCommand::class);
-        
+
         $commands = $this->registry->all();
-        
+
         $this->assertCount(1, $commands);
         $this->assertSame(
-            TestRegistryCommand::class, 
-            $commands[TestRegistryCommand::NAME]
+            TestRegistryCommand::class,
+            $commands[TestRegistryCommand::NAME],
         );
     }
 
@@ -59,17 +59,17 @@ class CommandRegistryTest extends NafTestCase
     {
         $this->registry->add(TestRegistryCommand::class);
         $this->registry->add(SecondTestRegistryCommand::class);
-        
+
         $commands = $this->registry->all();
-        
+
         $this->assertCount(2, $commands);
         $this->assertSame(
-            TestRegistryCommand::class, 
-            $commands[TestRegistryCommand::NAME]
+            TestRegistryCommand::class,
+            $commands[TestRegistryCommand::NAME],
         );
         $this->assertSame(
-            SecondTestRegistryCommand::class, 
-            $commands[SecondTestRegistryCommand::NAME]
+            SecondTestRegistryCommand::class,
+            $commands[SecondTestRegistryCommand::NAME],
         );
     }
 
@@ -77,9 +77,9 @@ class CommandRegistryTest extends NafTestCase
     {
         $this->registry->add(TestRegistryCommand::class);
         $this->registry->add(SecondTestRegistryCommand::class);
-        
+
         $this->registry->clear();
-        
+
         $this->assertEmpty($this->registry->all());
     }
 }

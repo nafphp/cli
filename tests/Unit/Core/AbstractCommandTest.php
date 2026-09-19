@@ -27,7 +27,7 @@ class AbstractCommandTest extends NafTestCase
     {
         $this->command->addTestArgument('test', false);
         $definition = $this->command->getDefinition();
-        
+
         $this->assertArrayHasKey('arguments', $definition);
         $this->assertArrayHasKey('test', $definition['arguments']);
         $this->assertSame('required', $definition['arguments']['test']);
@@ -37,7 +37,7 @@ class AbstractCommandTest extends NafTestCase
     {
         $this->command->addTestArgument('test', true);
         $definition = $this->command->getDefinition();
-        
+
         $this->assertArrayHasKey('arguments', $definition);
         $this->assertArrayHasKey('test', $definition['arguments']);
         $this->assertSame('optional', $definition['arguments']['test']);
@@ -47,7 +47,7 @@ class AbstractCommandTest extends NafTestCase
     {
         $this->command->addTestOption('test');
         $definition = $this->command->getDefinition();
-        
+
         $this->assertArrayHasKey('options', $definition);
         $this->assertArrayHasKey('test', $definition['options']);
         $this->assertSame('flag', $definition['options']['test']);
@@ -57,7 +57,7 @@ class AbstractCommandTest extends NafTestCase
     {
         $this->command->addTestOption('test', 't');
         $definition = $this->command->getDefinition();
-        
+
         $this->assertArrayHasKey('options', $definition);
         $this->assertArrayHasKey('test', $definition['options']);
         $this->assertArrayHasKey('t', $definition['options']);
@@ -69,7 +69,7 @@ class AbstractCommandTest extends NafTestCase
     {
         $this->command->addTestOption('test', '', true);
         $definition = $this->command->getDefinition();
-        
+
         $this->assertArrayHasKey('options', $definition);
         $this->assertArrayHasKey('test', $definition['options']);
         $this->assertSame('value', $definition['options']['test']);
@@ -78,10 +78,10 @@ class AbstractCommandTest extends NafTestCase
     public function testShowHelp(): void
     {
         $output = $this->createMock(Output::class);
-        
+
         $output->expects($this->atLeastOnce())
             ->method('writeLine');
-        
+
         $this->command->addTestArgument('arg1', false);
         $this->command->addTestArgument('arg2', true);
         $this->command->addTestOption('option1');

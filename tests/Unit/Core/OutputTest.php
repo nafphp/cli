@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Core;
 
 use Naf\CLI\Core\Output;
+use ReflectionClass;
 use Tests\NafTestCase;
 
 class OutputTest extends NafTestCase
@@ -34,11 +35,11 @@ class OutputTest extends NafTestCase
 
     public function testOutputClassHasCorrectProperties(): void
     {
-        $reflection = new \ReflectionClass(Output::class);
-        
+        $reflection = new ReflectionClass(Output::class);
+
         $this->assertTrue($reflection->hasProperty('foregroundColors'));
         $this->assertTrue($reflection->hasProperty('backgroundColors'));
-        
+
         $constants = $reflection->getConstants();
         $this->assertArrayHasKey('OUTPUT_TYPE_OK', $constants);
         $this->assertArrayHasKey('OUTPUT_TYPE_ERROR', $constants);
@@ -49,20 +50,20 @@ class OutputTest extends NafTestCase
     {
         // Stellen Sie sicher, dass keine Ausnahmen ausgelöst werden
         $this->expectNotToPerformAssertions();
-        
+
         // Puffern Sie die Ausgabe, um sie zu erfassen, ohne den Testlauf zu stören
         ob_start();
-        
+
         $this->output->writeLine('Test message');
         $this->output->writeLine('Test ok message', 'ok');
         $this->output->writeLine('Test error message', 'error');
         $this->output->writeLine('Test warning message', 'warning');
         $this->output->writeLine('Test title', 'title');
         $this->output->writeLine('Test headline', 'headline');
-        
+
         $this->output->writeEmptyLine();
         $this->output->drawStroke(10, '-');
-        
+
         // Bereinigen Sie den Ausgabepuffer
         ob_end_clean();
     }
@@ -73,19 +74,19 @@ class OutputTest extends NafTestCase
         ob_start();
         $this->output->writeLine('Test message', 'ok');
         $okOutput = ob_get_clean();
-        
+
         ob_start();
         $this->output->writeLine('Test message', 'error');
         $errorOutput = ob_get_clean();
-        
+
         ob_start();
         $this->output->writeLine('Test message', 'warning');
         $warningOutput = ob_get_clean();
-        
+
         ob_start();
         $this->output->writeLine('Test message', 'title');
         $titleOutput = ob_get_clean();
-        
+
         // Stellen Sie sicher, dass die Ausgaben unterschiedlich sind
         $this->assertNotEquals($okOutput, $errorOutput);
         $this->assertNotEquals($okOutput, $warningOutput);

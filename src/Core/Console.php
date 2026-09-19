@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Naf\CLI\Core;
 
+use Exception;
 use Naf\CLI\Commands\ListCommand;
 use Naf\CLI\Exception\ConsoleException;
 use Naf\CLI\Support\CommandRegistry;
+
 use function Naf\app;
 
 class Console
@@ -22,7 +24,7 @@ class Console
      * @param CommandRegistry $registry
      */
     public function __construct(
-        private readonly CommandRegistry $registry
+        private readonly CommandRegistry $registry,
     ) {
     }
 
@@ -55,7 +57,7 @@ class Console
 
             if (null === $commandClass) {
                 throw new ConsoleException(
-                    sprintf('Command "%s" not found', $commandName)
+                    sprintf('Command "%s" not found', $commandName),
                 );
             }
 
@@ -69,7 +71,7 @@ class Console
 
             $definition = $object->getDefinition();
 
-            $input = new Input($parameters, $definition);
+            $input  = new Input($parameters, $definition);
             $output = new Output();
 
             if ($object->getTitle()) {
@@ -81,7 +83,7 @@ class Console
 
             $status = $object->run($input, $output);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             print PHP_EOL;
             print $e->getMessage();
             print PHP_EOL;
@@ -94,5 +96,4 @@ class Console
 
         return $status;
     }
-
 }
