@@ -89,7 +89,7 @@ final class LauncherInstaller
                 fclose($file);
             }
         }
-        if (!chmod($target, 0755)) {
+        if (!is_executable($target) && !chmod($target, 0755)) {
             throw new RuntimeException('Could not make bin/naf executable.');
         }
         if ($changed) {
