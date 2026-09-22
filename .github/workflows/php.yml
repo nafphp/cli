@@ -34,3 +34,6 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+
+    - name: Verify console shortcut through Composer install and removal
+      run: sh tests/composer-install.sh
