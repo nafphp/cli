@@ -44,6 +44,18 @@ final class LauncherInstallerTest extends TestCase
         self::assertInstanceOf(stdClass::class, $manifest->extra);
     }
 
+    public function testExistingExecutableNeedsNoPermissionOrManifestChangesDuringTheHook(): void
+    {
+        LauncherInstaller::install($this->root);
+        $target = $this->root . '/bin/naf';
+        chmod($target, 0555);
+        chmod($this->root . '/composer.json', 0444);
+        LauncherInstaller::install($this->root, false);
+        clearstatcache();
+        self::assertSame(0555, fileperms($target) & 0777);
+        self::assertSame(0444, fileperms($this->root . '/composer.json') & 0777);
+    }
+
     public function testNeverOverwritesAnExistingLauncherOrChangesItsManifest(): void
     {
         mkdir($this->root . '/bin');
