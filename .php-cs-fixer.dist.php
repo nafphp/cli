@@ -10,7 +10,7 @@ $finder = Finder::create()
     ->name('*.php')
     ->name('*.phtml')
     ->exclude(['vendor', 'node_modules'])
-    ->append([__FILE__, __DIR__ . '/bin/naf']);
+    ->append([__FILE__, __DIR__ . '/bin/naf', __DIR__ . '/bin/naf-install']);
 
 return (new Config())
     ->setRiskyAllowed(false)

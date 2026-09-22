@@ -1,6 +1,12 @@
 #!/usr/bin/env php
 <?php
 
+use Composer\InstalledVersions;
+use Naf\CLI\Core\Console;
+use Naf\CLI\Support\CommandRegistry;
+
+use function Naf\app;
+
 // Composer gives its bin proxies the autoloader path; the project root follows from
 // it, so the command works from any working directory.
 $autoload = $GLOBALS['_composer_autoload_path'] ?? dirname(__DIR__) . '/vendor/autoload.php';
@@ -8,12 +14,8 @@ $autoload = $GLOBALS['_composer_autoload_path'] ?? dirname(__DIR__) . '/vendor/a
 $autoload = realpath($autoload) ?: throw new RuntimeException('Composer autoloader not found. Install the application dependencies first.');
 
 require_once $autoload;
-require_once dirname($autoload, 2) . '/bootstrap.php';
-
-use Naf\CLI\Core\Console;
-use Naf\CLI\Support\CommandRegistry;
-
-use function Naf\app;
+$root = InstalledVersions::getRootPackage()['install_path'] ?? dirname($autoload, 2);
+require_once $root . '/bootstrap.php';
 
 $registry = app()->container()->get(CommandRegistry::class);
 $cli      = new Console($registry);

@@ -36,7 +36,8 @@
     "style:fix": "@php vendor/bin/php-cs-fixer fix"
   },
   "bin": [
-    "bin/naf"
+    "bin/naf",
+    "bin/naf-install"
   ],
   "config": {
     "platform": {

@@ -83,3 +83,11 @@ Keep logical steps and local names readable, preserving public signatures and te
 `vendor/bin/naf plugins:debug` explains the computed plugin order and absent optional
 targets when the host framework supports automatic plugin ordering. On older frameworks
 it returns a clear unsupported diagnostic and a nonzero exit code.
+
+`vendor/bin/naf-install` is a setup utility that intentionally runs without Composer autoload
+or app bootstrap. From a host root it creates a POSIX `bin/naf` shortcut and appends an
+idempotent post-autoload-dump hook, preserving existing scripts and owner launchers. The
+shortcut delegates to an executable host-owned `bin/naf-runtime` when present. Runtime
+selection, including Docker Compose services, belongs to the host, not this package.
+Test setup without a working application/database, Composer reinstall/removal, argument
+and stdin forwarding, custom binary directories, and collision handling.

@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Naf\CLI\Support\LauncherInstaller;
+
+// Deliberately independent of the application bootstrap, database and Composer autoload.
+require_once dirname(__DIR__) . '/src/Support/LauncherInstaller.php';
+
+if (!isset($GLOBALS['_naf_launcher_hook']) && ($argv[1] ?? null) === '--help') {
+    fwrite(STDOUT, "Usage: vendor/bin/naf-install\nRun from the application root. Creates bin/naf and registers its Composer hook.\n");
+    exit(0);
+}
+if (!isset($GLOBALS['_naf_launcher_hook']) && count($argv) > 1) {
+    fwrite(STDERR, "Unknown argument. Run naf-install --help.\n");
+    exit(1);
+}
+
+try {
+    LauncherInstaller::install(getcwd(), !isset($GLOBALS['_naf_launcher_hook']));
+    fwrite(STDOUT, "NAF shortcut ready: bin/naf\n");
+} catch (Throwable $exception) {
+    fwrite(STDERR, $exception->getMessage() . "\n");
+    exit(1);
+}
