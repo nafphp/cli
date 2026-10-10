@@ -89,36 +89,83 @@ abstract class AbstractCommand
         return $this->description;
     }
 
+    /**
+     * Print the command's usage, arguments and options
+     *
+     * Output has no markup language: tags such as `<info>` were printed literally,
+     * so the help uses the line types Output knows and plain text.
+     */
     public function showHelp(Output $output): void
     {
-        $output->writeLine('');
-        $output->writeLine('  <info>' . ($this->getTitle() ?? static::NAME) . '</info>');
-        $output->writeLine('  ' . $this->getDescription());
-        $output->writeLine('');
-
         $definition = $this->getDefinition();
+        $arguments  = $definition['arguments'] ?? [];
+        $options    = $this->describeOptions($definition['options'] ?? []);
 
-        if (!empty($definition['arguments'])) {
-            $output->writeLine('  <comment>Arguments:</comment>');
-            foreach ($definition['arguments'] as $name => $mode) {
-                $optional = $mode === 'optional' ? ' (optional)' : '';
-                $output->writeLine("    <info>$name</info>$optional");
-            }
-            $output->writeLine('');
+        $usage = 'vendor/bin/naf ' . static::NAME;
+        foreach ($arguments as $name => $mode) {
+            $usage .= $mode === 'optional' ? " [<$name>]" : " <$name>";
+        }
+        if ($options !== []) {
+            $usage .= ' [options]';
         }
 
-        if (!empty($definition['options'])) {
-            $output->writeLine('  <comment>Options:</comment>');
-            foreach ($definition['options'] as $name => $mode) {
-                $expectsValue = $mode === 'value' ? ' [=value]' : '';
-                $output->writeLine("    <info>--$name</info>$expectsValue");
+        $output->writeEmptyLine();
+        $output->writeLine($this->getTitle() ?: (string) static::NAME, 'title');
+        if ($this->getDescription() !== '') {
+            $output->writeLine('  ' . $this->getDescription());
+        }
+        $output->writeEmptyLine();
+
+        $output->writeLine('Usage:', 'headline');
+        $output->writeLine('  ' . $usage);
+
+        if ($arguments !== []) {
+            $output->writeEmptyLine();
+            $output->writeLine('Arguments:', 'headline');
+            foreach ($arguments as $name => $mode) {
+                $output->writeLine('  ' . $name . ($mode === 'optional' ? ' (optional)' : ''));
             }
-            $output->writeLine('');
         }
 
-        $output->writeLine('  <comment>Help:</comment>');
-        $output->writeLine('    Use <info>php cli.php command-name --help</info> for this screen.');
-        $output->writeLine('');
+        if ($options !== []) {
+            $output->writeEmptyLine();
+            $output->writeLine('Options:', 'headline');
+            foreach ($options as $option) {
+                $output->writeLine('  ' . $option);
+            }
+        }
+
+        $output->writeEmptyLine();
+    }
+
+    /**
+     * One line per option, with its shortcut in front
+     *
+     * addOption() records a shortcut as its own entry right after the option.
+     *
+     * @param array<string, string> $options Option or shortcut name => 'flag' or 'value'
+     *
+     * @return list<string>
+     */
+    private function describeOptions(array $options): array
+    {
+        $lines    = [];
+        $previous = null;
+
+        foreach ($options as $name => $mode) {
+            $name = (string) $name;
+
+            if (strlen($name) === 1 && $previous !== null) {
+                $lines[array_key_last($lines)] = "-$name, " . $lines[array_key_last($lines)];
+                $previous                      = null;
+                continue;
+            }
+
+            $lines[]  = '--' . $name . ($mode === 'value' ? '=VALUE' : '');
+            $previous = $name;
+        }
+
+        return $lines;
     }
 
     abstract protected function configure(): void;

@@ -75,6 +75,27 @@ class AbstractCommandTest extends NafTestCase
         $this->assertSame('value', $definition['options']['test']);
     }
 
+    public function testShowHelpPrintsPlainUsageArgumentsAndOptions(): void
+    {
+        $this->command->addTestArgument('arg1', false);
+        $this->command->addTestArgument('arg2', true);
+        $this->command->addTestOption('option1');
+        $this->command->addTestOption('option2', 'o', true);
+
+        ob_start();
+        $this->command->showHelp(new Output());
+        $help = preg_replace('/\\e\\[[0-9;]*m/', '', (string) ob_get_clean());
+
+        // No literal markup and no hint at the old `php cli.php` entry point.
+        $this->assertStringNotContainsString('<info>', $help);
+        $this->assertStringNotContainsString('cli.php', $help);
+        $this->assertStringContainsString('Test Command', $help);
+        $this->assertStringContainsString('vendor/bin/naf test:command <arg1> [<arg2>] [options]', $help);
+        $this->assertStringContainsString('  arg2 (optional)', $help);
+        $this->assertStringContainsString('  --option1', $help);
+        $this->assertStringContainsString('  -o, --option2=VALUE', $help);
+    }
+
     public function testShowHelp(): void
     {
         $output = $this->createMock(Output::class);
